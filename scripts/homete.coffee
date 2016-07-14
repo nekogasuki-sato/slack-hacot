@@ -10,6 +10,9 @@
 
 module.exports = (robot) ->
 
+  robot.respond /how to use/i, (msg) ->
+    msg.send "リプライやダイレクトメッセージで「ほめて」って送るとほめるよ！"
+
   robot.respond /ほめて/i, (msg) ->
     username = msg.message.user.name
     msg.send msg.random [
