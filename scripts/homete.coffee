@@ -32,27 +32,6 @@ module.exports = (robot) ->
       "最高だよ！！",
       "さすが～～～～～！！"]
 
+  respondFoods = require './data/foods.json'
   robot.respond /今日なにたべる？/i, (msg) ->
-    msg.send msg.random [
-      "焼き魚！",
-      "カレー！:curry:",
-      "そば！",
-      "煮魚！",
-      "スパゲッティ！:spaghetti:",
-      "肉まみれ！",
-      "オムライス！",
-      "ハンバーグ！",
-      "うどん！そばよりうどん！断然うどん！",
-      "Pizza!:pizza:",
-      "サムギョプサル～～～！",
-      "焼肉！！やっきにく！:clap:やっきにく！！:clap::clap::clap:",
-      "たまごかけごはん！",
-      "刺身～～～",
-      "おにぎり！:rice_ball:",
-      "クリームシチュー！",
-      "肉じゃが！",
-      "マーボードーフ！",
-      "牛たん:heart:",
-      "おすし！:sushi:",
-      "手羽先！"]
-
+    msg.send msg.random respondFoods
