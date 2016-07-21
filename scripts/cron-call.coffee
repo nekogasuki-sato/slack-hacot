@@ -27,7 +27,7 @@ module.exports = (robot) ->
   # #your_channelと言う部屋に、平日の18:30時に実行
   new cronJob('*/15 * * * * 1-5', () ->
     # ↑のほうで宣言しているsendメソッドを実行する
-    send '#general', "@all スケジュールは更新した？"
+    send 'general', "@all スケジュールは更新した？"
   ).start()
 
 
