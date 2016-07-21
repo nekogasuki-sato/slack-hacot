@@ -24,5 +24,5 @@ module.exports = (robot) ->
 
   new cronJob('00 30 18 * * 1-5', () ->
     # ↑のほうで宣言しているsendメソッドを実行する
-    send 'general', "スケジュールは更新した？ @all"
+    send 'general', "スケジュールは更新した？ @everyone"
   ).start()
