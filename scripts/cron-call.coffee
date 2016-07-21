@@ -17,7 +17,7 @@ module.exports = (robot) ->
 	# DayOfMonth:1-31
 	# Months:0-11
 	# DayOfWeek:0-6
-  cronjob = new cronJob('00 35 19 * * 1-5', () =>
+  cronjob = new cronJob('00 37 19 * * 1-5', () =>
     envelope = room: "#general"
     robot.send envelope, "課題管理表は書きましたか？ @all"
     # robot.send "課題管理表は書きましたか？ @all"
