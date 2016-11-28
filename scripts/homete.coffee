@@ -33,12 +33,17 @@ module.exports = (robot) ->
       "最高だよ！！",
       "さすが～～～～～！！"]
 
+  # robot.respond /^ありがと/i, (msg) ->
+  #   msg.send msg.random [
+  #     "どういたしまして！",
+  #     "いえいえ！いつでもどうぞ！！"]
+
   robot.respond /今日なにたべる？/i, (msg) ->
     msg.send msg.random respondFoods
 
-  robot.respond /(?:hacot )?(.+)食べたい/i, (msg) ->
-    addFoods = msg.match[1]
-    msg.send "そうなの？じゃあ#{addFoods}食べに行く？？"
+  # robot.respond /(?:hacot )?(.+)食べたい/i, (msg) ->
+  #   addFoods = msg.match[1]
+  #   msg.send "そうなの？じゃあ#{addFoods}食べに行く？？"
     # respondFoods[] = addFoods
     # for food, index in respondFoods
     #   console.log "food: #{food} [#{index}]"
