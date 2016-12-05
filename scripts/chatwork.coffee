@@ -1,5 +1,5 @@
 # Description:
-#   Example scripts for you to examine and try out.
+#   チャットワークのAPIを叩きます！
 #
 # Notes:
 #   They are commented out by default, because most of them are pretty silly and
@@ -50,27 +50,7 @@ sendMessage = (msg, to, body) ->
     else
       msg.send "response error: #{response.statusCode}"  
 
-# 自身の情報を表示
-getMe = (msg) ->
-  request = require 'request'
-  groupList = []
-  request
-    url: "#{CHATWORK_BASE_URI}/me"
-    headers: headers
-  , (err, response, body) ->
-    throw err if err  # 接続エラーなどが発生した場合
-    if response.statusCode is 200  # ステータスコードが「OK」の場合
-      parsed = JSON.parse(body)
-      console.log parsed
-      # msg.send "#{parsed}"
-    else
-      msg.send "response error: #{response.statusCode}"  
-  
-
 module.exports = (robot) ->
-
-  # robot.hear /テスト/i, (msg) ->
-  # 	console.log headers
 
   # ヘルプ
   robot.respond /chatwork( help)?$/i, (msg) ->
@@ -99,7 +79,3 @@ module.exports = (robot) ->
   	body = """#{msg.match[2]}
   	from: #{username} - Slack"""
   	sendMessage msg, msg.match[1], body
-
-  # /me
-  robot.respond /chatwork me$/i, (msg) ->
-    getMe msg
