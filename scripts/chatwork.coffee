@@ -10,13 +10,13 @@
 headers = {'X-ChatWorkToken':'c6be5ddeaef0bfb0b02901596848ffeb'};
 
 getList = (msg, type) ->
-  msg.send type
   request = require 'request'
   groupList = []
   request
     url: 'https://api.chatwork.com/v1/rooms'
     headers: headers
   , (err, response, body) ->
+    msg.send err
     throw err if err  # 接続エラーなどが発生した場合
     if response.statusCode is 200  # ステータスコードが「OK」の場合
       parsed = JSON.parse(body)
