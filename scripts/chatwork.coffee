@@ -36,3 +36,6 @@ module.exports = (robot) ->
   # chatworkに存在するグループ/メンバー一覧を取得
   robot.respond /chatwork list (group|direct)/i, (msg) ->
     getList msg, msg.match[1]
+
+  robot.respond /おーい/i, (msg) ->
+    msg.send "なあに？"
