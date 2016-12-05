@@ -41,12 +41,12 @@ sendMessage = (msg, to, body) ->
     headers: headers
     form:
       body: "#{body}"
-  , (err, response, body) ->
+  , (err, response, res) ->
     throw err if err  # 接続エラーなどが発生した場合
     if response.statusCode is 200  # ステータスコードが「OK」の場合
-   	  parsed = JSON.parse(body)
+   	  parsed = JSON.parse(res)
    	  msgId = parsed["message_id"]
-      msg.send "send messege. <#{CHATWORK_ROOM_URL}#{to}-#{msgId}>"
+      msg.send "<#{CHATWORK_ROOM_URL}#{to}-#{msgId}|chatworkにPOSTしたよ！>```#{body}```"
     else
       msg.send "response error: #{response.statusCode}"  
 
@@ -69,16 +69,23 @@ getMe = (msg) ->
 
 module.exports = (robot) ->
 
-  robot.hear /テスト/i, (msg) ->
-  	console.log headers
+  # robot.hear /テスト/i, (msg) ->
+  # 	console.log headers
 
+  # ヘルプ
   robot.respond /chatwork( help)?$/i, (msg) ->
     msg.send """chatwork *** でchatworkAPIを叩くよ！コマンドはこんなかんじ！↓
-    ```chatwork help             ヘルプだよ！
-    chatwork me               botの情報を表示するよ！
-    chatwork rooms group      グループ一覧を表示するよ！
-    chatwork rooms direct     メンバー一覧を表示するよ！
-    chatwork send @{room_id} {messege}  宛先(@)にメッセージ({messege})を送信するよ！chatworkの記法が使えるよ！
+    ```
+    chatwork help
+    -- ヘルプだよ！
+    chatwork me
+    -- botの情報を表示するよ！
+    chatwork rooms group
+    -- グループ一覧を表示するよ！
+    chatwork rooms direct
+    -- メンバー一覧を表示するよ！
+    chatwork send @{room_id} {messege}
+    -- 宛先(@)にメッセージ({messege})を送信するよ！chatworkの記法が使えるよ！room_idはgroup/directで表示されるよ！
     ```
     """
 
@@ -88,7 +95,12 @@ module.exports = (robot) ->
 
   # メッセージを送る
   robot.respond /chatwork send @([0-9]{8}) ([\s\S]+)$/i, (msg) ->
-  	sendMessage msg, msg.match[1], msg.match[2]
+  	username = msg.message.user.name
+  	body = msg.match[2]
+  	body += """
+  	from: #{username} - Slack"""
+  	sendMessage msg, msg.match[1], body
 
+  # /me
   robot.respond /chatwork me$/i, (msg) ->
     getMe msg
