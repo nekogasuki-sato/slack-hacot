@@ -10,6 +10,7 @@
 headers = {'X-ChatWorkToken':'c6be5ddeaef0bfb0b02901596848ffeb'};
 
 getList = (msg, type) ->
+  msg.send type
   request = require 'request'
   groupList = []
   request
