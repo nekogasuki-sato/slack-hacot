@@ -96,8 +96,7 @@ module.exports = (robot) ->
   # メッセージを送る
   robot.respond /chatwork send @([0-9]{8}) ([\s\S]+)$/i, (msg) ->
   	username = msg.message.user.name
-  	body = msg.match[2]
-  	body += """
+  	body = """#{msg.match[2]}
   	from: #{username} - Slack"""
   	sendMessage msg, msg.match[1], body
 
