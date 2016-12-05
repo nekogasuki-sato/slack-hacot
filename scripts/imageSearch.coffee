@@ -36,5 +36,5 @@ searchImageFromTiqav = (msg, query = {}) ->
 module.exports = (robot) ->
 
   robot.respond /resimg (.+)$/i, (msg) ->
-    keyword = encodeURIComponent(msg.match[1])
+    keyword = msg.match[1]
     searchImageFromTiqav msg, {q: keyword}
