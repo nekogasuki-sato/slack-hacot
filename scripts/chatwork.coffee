@@ -16,7 +16,6 @@ getList = (msg, type) ->
     url: 'https://api.chatwork.com/v1/rooms'
     headers: headers
   , (err, response, body) ->
-    msg.send err
     throw err if err  # 接続エラーなどが発生した場合
     if response.statusCode is 200  # ステータスコードが「OK」の場合
       parsed = JSON.parse(body)
@@ -34,9 +33,14 @@ getList = (msg, type) ->
 
 module.exports = (robot) ->
 
+  robot.respond /\/chatwork help/i, (msg) ->
+    msg.send """/chatwork *** でchatworkAPIを叩くよ！コマンドはこんなかんじ！↓
+    ```/chatwork help          ヘルプだよ！
+    /chatwork rooms group   グループ一覧を表示するよ！
+    /chatwork rooms direct  メンバー一覧を表示するよ！```
+    """
+
   # chatworkに存在するグループ/メンバー一覧を取得
-  robot.respond /chatwork list (group|direct)/i, (msg) ->
+  robot.respond /\/chatwork rooms (group|direct)/i, (msg) ->
     getList msg, msg.match[1]
 
-  robot.respond /おーい/i, (msg) ->
-    msg.send "なあに？"
