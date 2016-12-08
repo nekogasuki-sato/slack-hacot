@@ -5,7 +5,7 @@
 request = require 'request'
 GAS_URL = "https://script.google.com/macros/s/AKfycbyAOo25j6VfbZIzc0H5c0402r8Uy6cOy4FnBe8KYXPAQXwkxQU/exec"
 
-addMeshiLog = (msg, place, shop, food) ->
+addMeshiLog = (msg, place, shop, food, username) ->
   msg.http(GAS_URL).query({place:place, shop:shop, food:food, username:username}).get() (err, res, body) ->
     throw err if err  # 接続エラーなどが発生した場合
     if res.statusCode is 200  # ステータスコードが「OK」の場合
