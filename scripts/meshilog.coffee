@@ -6,7 +6,7 @@ request = require 'request'
 GAS_URL = "https://script.google.com/macros/s/AKfycbyAOo25j6VfbZIzc0H5c0402r8Uy6cOy4FnBe8KYXPAQXwkxQU/exec"
 
 addMeshiLog = (msg, place, shop, food) ->
-  msg.http(GAS_URL).query({place:place, shop:shop, food:food}).get() (err, res, body) ->
+  msg.http(GAS_URL).query({place:place, shop:shop, food:food, username:username}).get() (err, res, body) ->
     throw err if err  # 接続エラーなどが発生した場合
     if res.statusCode is 200  # ステータスコードが「OK」の場合
       msg.reply "いいな〜！！また行こうね！"
@@ -19,5 +19,6 @@ module.exports = (robot) ->
     place = msg.match[1]
     shop  = msg.match[2]
     food  = msg.match[3]
-    addMeshiLog msg, place, shop, food
+    username = msg.message.user.name
+    addMeshiLog msg, place, shop, food, username
 
