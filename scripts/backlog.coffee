@@ -7,7 +7,7 @@ BACKLOG_URL = "https://haco.backlog.jp/"
 
 module.exports = (robot) ->
   robot.router.post "/room/:room", (req, res) ->
-    console.info req.body
+    # console.info req.body
     room = req.params.room
     body = req.body
     try
@@ -45,10 +45,7 @@ module.exports = (robot) ->
 
       # Slack に投稿
       if message?
-        userId = robot.adapter.client.getUserByName(room)?.id
-        robot.adapter.client.openDM userId, (data) ->
-          robot.send {room: room}, message
-        # robot.messageRoom room, message
+        robot.messageRoom room, message
         res.end "OK"
       else
         robot.messageRoom room, "Backlog integration error."
