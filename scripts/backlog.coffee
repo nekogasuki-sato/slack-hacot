@@ -45,7 +45,10 @@ module.exports = (robot) ->
 
       # Slack に投稿
       if message?
-        robot.messageRoom room, message
+        userId = robot.adapter.client.getUserByName(room)?.id
+        robot.adapter.client.openDM userId, (data) ->
+          robot.send {room: room}, message
+        # robot.messageRoom room, message
         res.end "OK"
       else
         robot.messageRoom room, "Backlog integration error."
