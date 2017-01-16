@@ -17,6 +17,7 @@ module.exports = (robot) ->
         when 2, 3
           # 「更新」と「コメント」は実際は一緒に使うので、一緒に。
           label = '課題の更新'
+          console.info(body.content.changes)
         else
           # 課題関連以外はスルー
           return true
@@ -39,6 +40,11 @@ module.exports = (robot) ->
 
       message += "\n"
 
+      # 課題の追加のときのみ説明を追加
+      if body.type == 1 && body.content.description != ""
+        message += "```#{body.content.description}```\n"
+
+      # コメントがあれば追加
       if body.content.comment?.content? && body.content.comment.content != ""
         message += "```#{body.content.comment.content}```\n"
       message += "#{url}"
