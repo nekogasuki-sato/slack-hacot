@@ -36,9 +36,9 @@ module.exports = (robot) ->
             if i.field == 'limitDate'
               changes += ">・期限日: [#{oldVal}] -> [#{newVal}]\n"
             if i.field == 'description'
-              oldVal.replace(/\n/g, '\n')
-              newVal.replace(/\n/g, '\n')
-              console.info(oldVal)
+              oldVal = oldVal.replace(/\n/g, '\n')
+              newVal = newVal.replace(/\n/g, '\n')
+              console.info(oldVal.length)
               if oldVal.length > STR_LENGTH_MAX
                 oldVal[0..STR_LENGTH_MAX] + "…"
               if newVal.length > STR_LENGTH_MAX
