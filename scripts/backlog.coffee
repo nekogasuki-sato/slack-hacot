@@ -50,7 +50,8 @@ module.exports = (robot) ->
                 nDescription = nDescription[0..STR_LENGTH_MAX] + "…"
               console.info(oDescription)
               console.info(nDescription)
-              changes += ">・説明: [#{oDescription}]\n-> [#{nDescription}]\n"
+              changes += ">・説明: ->\n"
+              changes += "```#{nDescription}```"
 
         when 3
           # コメント
