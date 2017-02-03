@@ -29,21 +29,22 @@ module.exports = (robot) ->
             console.info(i.field)
             oldVal = i.old_value
             newVal = i.new_value
-            console.info(i.field)
-            console.info(oldVal)
-            console.info(oldVal)
             if i.field == 'status'
               oStatus = STATUS[i.old_value]
               nStatus = STATUS[i.new_value]
-              changes += ">・ステータス: #{oStatus} ➡ #{nStatus}\n"
+              changes += ">・ステータス: [#{oStatus}] -> [#{nStatus}]\n"
             if i.field == 'limitDate'
-              changes += ">・期限日: #{oldVal} ➡ #{newVal}\n"
+              changes += ">・期限日: [#{oldVal}] -> [#{newVal}]\n"
             if i.field == 'description'
+              oldVal.replace(/\n/g, '\n')
+              newVal.replace(/\n/g, '\n')
+              console.info(oldVal)
               if oldVal.length > STR_LENGTH_MAX
                 oldVal[0..STR_LENGTH_MAX] + "…"
               if newVal.length > STR_LENGTH_MAX
                 newVal[0..STR_LENGTH_MAX] + "…"
-              changes += ">・説明: #{oldVal} ➡ #{newVal}\n"
+              console.info(oldVal)
+              changes += ">・説明: [#{oldVal}]\n-> [#{newVal}]\n"
 
         when 3
           # コメント
