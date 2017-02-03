@@ -12,6 +12,9 @@ module.exports = (robot) ->
     # console.info req.body
     room = req.params.room
     body = req.body
+    url = "#{BACKLOG_URL}view/#{body.project.projectKey}-#{body.content.key_id}"
+    if body.content.comment?.id?
+        url += "#comment-#{body.content.comment.id}"
     try
       description = ""
       changes = ""
@@ -39,6 +42,9 @@ module.exports = (robot) ->
               nStatus = STATUS[nStatusId]
               changes += ">・ステータス: [#{oStatus}] -> [#{nStatus}]\n"
 
+            if i.field == 'assigner'
+              changes += ">・担当者: [#{oldVal}] -> [#{newVal}]\n"
+
             if i.field == 'limitDate'
               changes += ">・期限日: [#{oldVal}] -> [#{newVal}]\n"
 
@@ -49,8 +55,7 @@ module.exports = (robot) ->
               # 長かったらぶった切って「…」を付与
               if nDescription.length > STR_LENGTH_MAX
                 nDescription = nDescription[0..STR_LENGTH_MAX] + "…"
-              changes += ">・説明: ->\n"
-              changes += "```#{nDescription}```\n"
+              changes += ">・説明: <#{url}|変更あり>\n"
 
         when 3
           # コメント
@@ -86,9 +91,6 @@ module.exports = (robot) ->
         message += "```#{body.content.comment.content}```\n"
 
       # URL
-      url = "#{BACKLOG_URL}view/#{body.project.projectKey}-#{body.content.key_id}"
-      if body.content.comment?.id?
-          url += "#comment-#{body.content.comment.id}"
       message += "#{url}"
 
       # Slack に投稿
