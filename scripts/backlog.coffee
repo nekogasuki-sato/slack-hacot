@@ -33,20 +33,20 @@ module.exports = (robot) ->
             oldVal = i.old_value
             newVal = i.new_value
             if i.field == 'summary'
-              changes += ">・タイトル: [#{oldVal}] -> [#{newVal}]\n"
+              changes += "・タイトル: [#{oldVal}] -> [#{newVal}]\n"
 
             if i.field == 'status'
               oStatusId = i.old_value - 1
               nStatusId = i.new_value - 1
               oStatus = STATUS[oStatusId]
               nStatus = STATUS[nStatusId]
-              changes += ">・ステータス: [#{oStatus}] -> [#{nStatus}]\n"
+              changes += "・ステータス: [#{oStatus}] -> [#{nStatus}]\n"
 
             if i.field == 'assigner'
-              changes += ">・担当者: [#{oldVal}] -> [#{newVal}]\n"
+              changes += "・担当者: [#{oldVal}] -> [#{newVal}]\n"
 
             if i.field == 'limitDate'
-              changes += ">・期限日: [#{oldVal}] -> [#{newVal}]\n"
+              changes += "・期限日: [#{oldVal}] -> [#{newVal}]\n"
 
             if i.field == 'description'
               # 長いので新しい説明のみを表示させる
@@ -55,7 +55,7 @@ module.exports = (robot) ->
               # 長かったらぶった切って「…」を付与
               if nDescription.length > STR_LENGTH_MAX
                 nDescription = nDescription[0..STR_LENGTH_MAX] + "…"
-              changes += ">・説明: <#{url}|変更あり>\n"
+              changes += "・説明: 変更あり\n"
 
         when 3
           # コメント
@@ -78,17 +78,27 @@ module.exports = (robot) ->
 
       message += "\n"
 
+      # ```で囲む更新内容を整形
+      detailMessage = ""
       # 説明
       if description != ""
-        message += "```#{body.content.description}```\n"
+        detailMessage += "#{description}\n"
 
       # 変更内容
       if changes != ""
-        message += "#{changes}"
+        detailMessage += "------------------\n"
+        detailMessage += "【変更内容】\n"
+        detailMessage += "#{changes}"
 
       # コメントがあれば追加
       if body.content.comment?.content? && body.content.comment.content != ""
-        message += "```#{body.content.comment.content}```\n"
+        detailMessage += "------------------\n"
+        detailMessage += "【コメント】\n"
+        detailMessage += "#{body.content.comment.content}\n"
+
+      # 詳細コメントを本文に追加
+      if detailMessage != ""
+        message += "```#{detailMessage}```\n"
 
       # URL
       message += "#{url}"
