@@ -5,7 +5,7 @@
 #   None
 BACKLOG_URL = "https://haco.backlog.jp/"
 STATUS = ['未対応', '処理中', '処理済み', '完了']
-STR_LENGTH_MAX = 50
+STR_LENGTH_MAX = 100
 
 module.exports = (robot) ->
   robot.router.post "/room/:room", (req, res) ->
@@ -30,28 +30,27 @@ module.exports = (robot) ->
             oldVal = i.old_value
             newVal = i.new_value
             if i.field == 'summary'
-              changes += ">タイトル: [#{oldVal}] -> [#{newVal}]\n"
+              changes += ">・タイトル: [#{oldVal}] -> [#{newVal}]\n"
 
             if i.field == 'status'
-              oStatus = STATUS[i.old_value]
-              nStatus = STATUS[i.new_value]
+              oStatusId = i.old_value - 1
+              nStatusId = i.new_value - 1
+              oStatus = STATUS[oStatusId]
+              nStatus = STATUS[nStatusId]
               changes += ">・ステータス: [#{oStatus}] -> [#{nStatus}]\n"
 
             if i.field == 'limitDate'
               changes += ">・期限日: [#{oldVal}] -> [#{newVal}]\n"
 
             if i.field == 'description'
-              oDescription = oldVal.replace(/\n/g, '　')
-              nDescription = newVal.replace(/\n/g, '　')
-              console.info(oDescription.length)
-              if oDescription.length > STR_LENGTH_MAX
-                oDescription = oDescription[0..STR_LENGTH_MAX] + "…"
+              # 長いので新しい説明のみを表示させる
+              # 改行をスペースに変換
+              nDescription = newVal.replace(/\n/g, ' ') 
+              # 長かったらぶった切って「…」を付与
               if nDescription.length > STR_LENGTH_MAX
                 nDescription = nDescription[0..STR_LENGTH_MAX] + "…"
-              console.info(oDescription)
-              console.info(nDescription)
               changes += ">・説明: ->\n"
-              changes += "```#{nDescription}```"
+              changes += "```#{nDescription}```\n"
 
         when 3
           # コメント
