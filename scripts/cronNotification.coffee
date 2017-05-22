@@ -1,7 +1,7 @@
 # Description:
 #   ゴミの日を通知するよ
 cronJob = require('cron').CronJob
-CHANNEL = "bot_test"
+CHANNEL = "general"
 GOMI = [
   'もえないゴミ・有害危険ゴミ・古紙類・繊維', # 月
   'もえるゴミ', # 火
