@@ -44,6 +44,7 @@ module.exports = (robot) ->
   # Months     : 0-11
   # DayOfWeek  : 0-6
   # Every      : */10
-  new cronJob('00 5 12 * * *', () ->
+  # 水金土は次の日ゴミ出しがないので通知をしない
+  new cronJob('00 00 21 * * 0,1,2,4', () ->
     whatDayIsToday()
   ).start()
