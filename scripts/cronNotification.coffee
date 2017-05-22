@@ -28,7 +28,7 @@ module.exports = (robot) ->
     returnMessage += COMMENT[week]
 
   # 曜日をチェック
-  whatDayIsToday = (msg)->
+  whatDayIsToday = ->
     d = new Date
     week = d.getDay()
     message = makeMessage(week)
@@ -37,12 +37,13 @@ module.exports = (robot) ->
   robot.respond /get week$/i, (msg) ->
     whatDayIsToday msg
 
-# Seconds　0-59
-  # Minutes:0-59
-  # Hours:0-23
-  # DayOfMonth:1-31
-  # Months:0-11
-  # DayOfWeek:0-6
-  # new cronJob('00 10 7 * * *', () ->
-  #   getWeather()
-  # ).start()
+  # Seconds    : 0-59
+  # Minutes    : 0-59
+  # Hours      : 0-23
+  # DayOfMonth : 1-31
+  # Months     : 0-11
+  # DayOfWeek  : 0-6
+  # Every      : */10
+  new cronJob('00 */1 * * * *', () ->
+    whatDayIsToday()
+  ).start()
