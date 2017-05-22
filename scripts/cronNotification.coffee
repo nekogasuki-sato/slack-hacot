@@ -44,6 +44,6 @@ module.exports = (robot) ->
   # Months     : 0-11
   # DayOfWeek  : 0-6
   # Every      : */10
-  new cronJob('00 */1 * * * *', () ->
+  new cronJob('00 5 12 * * *', () ->
     whatDayIsToday()
   ).start()
