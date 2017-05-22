@@ -17,24 +17,23 @@ COMMENT = [
   "\nリビング、冷蔵庫の生ゴミ、ベランダ、洗面所、トイレ、仕事部屋のゴミ箱をチェックだ！" # 金
 ]
 
-# 曜日をチェック
-whatDayIsToday = (msg)->
-  d = new Date
-  week = d.getDay()
-  message = makeMessage(week)
-  send message
-
-# メッセージ作成
-makeMessage = (week) ->
-  returnMessage = "明日は#{GOMI[week]}を出す日だよー"
-  returnMessage += COMMENT[week]
-
-# 指定チャンネルにメッセージを送る
-send = (msg) ->
-  robot.send {room: CHANNEL}, msg
-
-
 module.exports = (robot) ->
+  # 指定チャンネルにメッセージを送る
+  send = (msg) ->
+    robot.send {room: CHANNEL}, msg
+
+  # メッセージ作成
+  makeMessage = (week) ->
+    returnMessage = "明日は#{GOMI[week]}を出す日だよー"
+    returnMessage += COMMENT[week]
+
+  # 曜日をチェック
+  whatDayIsToday = (msg)->
+    d = new Date
+    week = d.getDay()
+    message = makeMessage(week)
+    send message
+
   robot.respond /get week$/i, (msg) ->
     whatDayIsToday msg
 
