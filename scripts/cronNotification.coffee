@@ -56,3 +56,8 @@ module.exports = (robot) ->
     message = "@hodaka 保険振込#{toLimitDate}日前だよーコンビニ行って払ってきてね！"
     send message
   ).start()
+
+  new cronJob('00 00 10 20 * *', () ->
+    message = "@hodaka そろそろ家賃（¥34,100-）振込みよろしゅう :yay:"
+    send message
+  ).start()
