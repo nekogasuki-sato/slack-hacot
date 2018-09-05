@@ -49,14 +49,6 @@ module.exports = (robot) ->
     whatDayIsToday()
   ).start()
 
-  new cronJob('00 00 10 5,9 * *', () ->
-    d = new Date
-    day = d.getDate()
-    toLimitDate = 10 - day
-    message = "@hodaka 保険振込#{toLimitDate}日前だよーコンビニ行って払ってきてね！"
-    send message
-  ).start()
-
   new cronJob('00 00 10 20 * *', () ->
     message = "@hodaka そろそろ家賃（¥34,100-）振込みよろしゅう :yay:"
     send message
